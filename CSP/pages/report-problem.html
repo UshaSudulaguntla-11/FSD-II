@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Report Problem | WaterWatch</title>
+
+<link rel="stylesheet"
+href="../css/style.css">
+
+<style>
+
+.report-container {
+
+max-width:800px;
+
+margin:60px auto;
+
+padding:20px;
+
+}
+
+.form-card {
+
+background:white;
+
+padding:35px;
+
+border-radius:20px;
+
+box-shadow:
+0 10px 35px
+rgba(0,0,0,.08);
+
+}
+
+.form-group {
+
+margin-bottom:20px;
+
+}
+
+label {
+
+display:block;
+
+font-weight:600;
+
+margin-bottom:8px;
+
+}
+
+select,
+textarea,
+input {
+
+width:100%;
+
+padding:13px;
+
+border:1px solid #d5e5ea;
+
+border-radius:10px;
+
+}
+
+textarea {
+
+height:120px;
+
+resize:none;
+
+}
+
+.gps {
+
+display:flex;
+
+gap:10px;
+
+}
+
+.gps button {
+
+background:#087ea4;
+
+color:white;
+
+border:0;
+
+padding:12px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+}
+
+.photo {
+
+border:2px dashed #b9dce6;
+
+padding:30px;
+
+text-align:center;
+
+border-radius:15px;
+
+cursor:pointer;
+
+}
+
+#preview {
+
+max-width:200px;
+
+display:none;
+
+margin:15px auto;
+
+border-radius:10px;
+
+}
+
+.submit {
+
+background:#087ea4;
+
+color:white;
+
+border:0;
+
+padding:14px 25px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+font-weight:600;
+
+}
+
+.success {
+
+display:none;
+
+text-align:center;
+
+padding:30px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+<div class="logo">
+💧 WaterWatch
+</div>
+
+<nav>
+
+<a href="../index.html">
+Home
+</a>
+
+<a href="water-quality.html">
+Water Quality
+</a>
+
+<a href="report-problem.html">
+Report Problem
+</a>
+
+<a href="schedule.html">
+Schedule
+</a>
+
+</nav>
+
+</header>
+
+
+<div class="report-container">
+
+<h1>
+🚰 Report a Water Problem
+</h1>
+
+<p style="margin:10px 0 25px;color:#71808a">
+
+Help your community by reporting
+water-related problems.
+
+</p>
+
+
+<div class="form-card"
+id="formContainer">
+
+<form id="reportForm">
+
+
+<div class="form-group">
+
+<label>
+Problem Type
+</label>
+
+<select id="problem"
+required>
+
+<option value="">
+Select Problem
+</option>
+
+<option>
+Pipeline Leakage
+</option>
+
+<option>
+Contaminated Water
+</option>
+
+<option>
+No Water Supply
+</option>
+
+<option>
+Damaged Water Tank
+</option>
+
+<option>
+Other
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Upload Photo
+</label>
+
+<label class="photo">
+
+📷 Click to upload
+
+<input
+type="file"
+id="photo"
+accept="image/*"
+hidden>
+
+<img
+id="preview">
+
+</label>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+GPS Location
+</label>
+
+<div class="gps">
+
+<input
+id="location"
+placeholder="Location not captured"
+readonly>
+
+<button
+type="button"
+onclick="getLocation()">
+
+📍 Get GPS
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Describe the Problem
+</label>
+
+<textarea
+id="description"
+placeholder="Describe the problem..."
+required></textarea>
+
+</div>
+
+
+<button
+class="submit"
+type="submit">
+
+Submit Complaint
+
+</button>
+
+
+</form>
+
+</div>
+
+
+<div
+class="form-card success"
+id="success">
+
+<div style="font-size:60px">
+✅
+</div>
+
+<h2>
+Complaint Submitted
+</h2>
+
+<p>
+Your complaint has been successfully
+recorded.
+</p>
+
+<h2
+id="complaintID"
+style="color:#087ea4;margin:15px">
+</h2>
+
+<p>
+Status:
+<strong>
+Under Review
+</strong>
+</p>
+
+<br>
+
+<a
+href="../index.html"
+class="btn primary">
+
+Back to Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+
+<script>
+
+
+// PHOTO PREVIEW
+
+document
+.getElementById("photo")
+.addEventListener(
+"change",
+function(event){
+
+const file =
+event.target.files[0];
+
+if(!file) return;
+
+const preview =
+document.getElementById("preview");
+
+preview.src =
+URL.createObjectURL(file);
+
+preview.style.display =
+"block";
+
+});
+
+
+// GPS
+
+function getLocation(){
+
+const location =
+document.getElementById("location");
+
+
+if(!navigator.geolocation){
+
+location.value =
+"GPS not supported";
+
+return;
+
+}
+
+
+location.value =
+"Getting location...";
+
+
+navigator.geolocation.getCurrentPosition(
+
+function(position){
+
+const latitude =
+position.coords.latitude;
+
+const longitude =
+position.coords.longitude;
+
+
+location.value =
+latitude.toFixed(6)
++
+", "
++
+longitude.toFixed(6);
+
+},
+
+function(){
+
+location.value =
+"Location permission denied";
+
+}
+
+);
+
+}
+
+
+// FORM SUBMISSION
+
+document
+.getElementById("reportForm")
+.addEventListener(
+"submit",
+function(event){
+
+event.preventDefault();
+
+
+const number =
+Math.floor(
+1000 +
+Math.random()*9000
+);
+
+
+const complaintID =
+"WW"
++
+number;
+
+
+document
+.getElementById("complaintID")
+.innerText =
+"Complaint ID: "
++
+complaintID;
+
+
+document
+.getElementById("formContainer")
+.style.display =
+"none";
+
+
+document
+.getElementById("success")
+.style.display =
+"block";
+
+
+});
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Clean Water Sources | WaterWatch</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a href="../index.html" class="brand">
+        <span class="logo">💧</span>
+
+        <div>
+            <h2>WaterWatch</h2>
+            <small>Nearby Clean Water Sources</small>
+        </div>
+    </a>
+
+</header>
+
+
+<div class="page">
+
+    <h1>📍 Nearby Clean Water Sources</h1>
+
+    <p class="page-description">
+        Find available clean and safe water sources in your village.
+    </p>
+
+
+    <div class="card">
+
+        <h2>Available Water Sources</h2>
+
+        <br>
+
+        <div class="service-grid">
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    🏠
+                </div>
+
+                <div>
+
+                    <h3>Village Main Water Tank</h3>
+
+                    <p>
+                        Approx. 0.5 km away
+                    </p>
+
+                    <br>
+
+                    <p>
+                        Status: <b>Available</b>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    🚰
+                </div>
+
+                <div>
+
+                    <h3>Community RO Plant</h3>
+
+                    <p>
+                        Approx. 1.2 km away
+                    </p>
+
+                    <br>
+
+                    <p>
+                        Status: <b>Open</b>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    💧
+                </div>
+
+                <div>
+
+                    <h3>Public Water Point</h3>
+
+                    <p>
+                        Approx. 1.8 km away
+                    </p>
+
+                    <br>
+
+                    <p>
+                        Status: <b>Available</b>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>📍 Find My Location</h2>
+
+        <br>
+
+        <p id="locationResult">
+            Click the button below to capture your current location.
+        </p>
+
+        <br>
+
+        <button class="btn" onclick="getUserLocation()">
+            📍 Get My Location
+        </button>
+
+    </div>
+
+
+    <a href="../index.html" class="primary-btn">
+        ← Back to Home
+    </a>
+
+</div>
+
+
+<script src="../js/app.js"></script>
+
+<script>
+
+function getUserLocation() {
+
+    const result =
+        document.getElementById("locationResult");
+
+    if (!navigator.geolocation) {
+
+        result.innerText =
+            "Geolocation is not supported by your browser.";
+
+        return;
+    }
+
+    result.innerText =
+        "Getting your location...";
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            const latitude =
+                position.coords.latitude.toFixed(6);
+
+            const longitude =
+                position.coords.longitude.toFixed(6);
+
+
+            result.innerHTML =
+                "<b>Location Found!</b><br><br>" +
+                "Latitude: " + latitude +
+                "<br>" +
+                "Longitude: " + longitude;
+
+            showToast("Location captured successfully!");
+
+        },
+
+        function() {
+
+            result.innerText =
+                "Unable to get your location. Please allow location permission.";
+
+            showToast("Location permission denied.");
+
+        }
+
+    );
+
+}
+
+</script>
+
+</body>
+</html>

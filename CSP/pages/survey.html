@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Community Survey | WaterWatch</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<div id="toast" class="toast"></div>
+
+
+<header class="navbar">
+
+    <a href="../index.html" class="brand">
+
+        <span class="logo">💧</span>
+
+        <div>
+            <h2>WaterWatch</h2>
+            <small>Community Water Survey</small>
+        </div>
+
+    </a>
+
+</header>
+
+
+<div class="page">
+
+    <h1>📝 Community Water Survey</h1>
+
+    <p class="page-description">
+        Share your experience and help us understand water-related problems in your village.
+    </p>
+
+
+    <div class="card">
+
+        <form id="surveyForm">
+
+
+            <div class="form-group">
+
+                <label>Your Name</label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Village / Area</label>
+
+                <input
+                    type="text"
+                    id="village"
+                    placeholder="Enter your village or area"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>How is your water supply?</label>
+
+                <select id="supply" required>
+
+                    <option value="">
+                        Select an option
+                    </option>
+
+                    <option value="Regular">
+                        Regular
+                    </option>
+
+                    <option value="Irregular">
+                        Irregular
+                    </option>
+
+                    <option value="Limited">
+                        Very Limited
+                    </option>
+
+                    <option value="No Supply">
+                        No Supply
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Main Water Problem</label>
+
+                <select id="mainProblem" required>
+
+                    <option value="">
+                        Select the main problem
+                    </option>
+
+                    <option value="Water Quality">
+                        Unsafe / Dirty Water
+                    </option>
+
+                    <option value="Water Scarcity">
+                        Water Scarcity
+                    </option>
+
+                    <option value="Pipeline Leakage">
+                        Pipeline Leakage
+                    </option>
+
+                    <option value="Irregular Supply">
+                        Irregular Water Supply
+                    </option>
+
+                    <option value="Water Wastage">
+                        Water Wastage
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Do you think water quality should be monitored regularly?</label>
+
+                <select id="monitoring" required>
+
+                    <option value="">
+                        Select an option
+                    </option>
+
+                    <option>Yes</option>
+
+                    <option>No</option>
+
+                    <option>Not Sure</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Additional Comments</label>
+
+                <textarea
+                    id="comments"
+                    placeholder="Share your suggestions or problems..."
+                ></textarea>
+
+            </div>
+
+
+            <button type="submit" class="btn">
+
+                Submit Survey
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <a href="../index.html" class="secondary-btn">
+        ← Back to Home
+    </a>
+
+</div>
+
+
+<script src="../js/app.js"></script>
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const form =
+            document.getElementById("surveyForm");
+
+
+        form.addEventListener(
+            "submit",
+            function (e) {
+
+                e.preventDefault();
+
+
+                const data = getData();
+
+
+                const survey = {
+
+                    name:
+                        document.getElementById("name").value,
+
+                    village:
+                        document.getElementById("village").value,
+
+                    supply:
+                        document.getElementById("supply").value,
+
+                    problem:
+                        document.getElementById("mainProblem").value,
+
+                    monitoring:
+                        document.getElementById("monitoring").value,
+
+                    comments:
+                        document.getElementById("comments").value,
+
+                    date:
+                        new Date().toLocaleDateString()
+
+                };
+
+
+                data.surveys.push(survey);
+
+                saveData(data);
+
+
+                showToast(
+                    "Thank you! Your survey was submitted successfully."
+                );
+
+
+                form.reset();
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>

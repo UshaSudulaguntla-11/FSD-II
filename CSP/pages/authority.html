@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Authority Dashboard | WaterWatch
+    </title>
+
+    <link rel="stylesheet"
+          href="../css/style.css">
+
+</head>
+
+<body>
+
+<div id="toast"
+     class="toast"></div>
+
+
+<header class="navbar">
+
+    <a href="../index.html"
+       class="brand">
+
+        <span class="logo">
+            💧
+        </span>
+
+        <div>
+
+            <h2>WaterWatch</h2>
+
+            <small>
+                Authority Dashboard
+            </small>
+
+        </div>
+
+    </a>
+
+</header>
+
+
+<div class="page">
+
+    <h1>
+        🏛 Authority Dashboard
+    </h1>
+
+    <p class="page-description">
+
+        Monitor and manage water-related
+        complaints reported by villagers.
+
+    </p>
+
+
+    <div class="card">
+
+        <h2>
+            Complaint Management
+        </h2>
+
+        <br>
+
+
+        <div style="overflow-x: auto;">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Problem</th>
+
+                        <th>Location</th>
+
+                        <th>Date</th>
+
+                        <th>Status</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="complaintTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <a href="../index.html"
+       class="primary-btn">
+
+        ← Back to Home
+
+    </a>
+
+</div>
+
+
+<script src="../js/app.js"></script>
+
+
+<script>
+
+function loadComplaints() {
+
+    const data = getData();
+
+    const table =
+        document.getElementById(
+            "complaintTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if (data.complaints.length === 0) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td colspan="6">
+
+                    No complaints reported yet.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    data.complaints.forEach(
+        function(complaint, index) {
+
+            table.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        ${complaint.id}
+                    </td>
+
+                    <td>
+                        ${complaint.problem}
+                    </td>
+
+                    <td>
+                        ${complaint.location}
+                    </td>
+
+                    <td>
+                        ${complaint.date}
+                    </td>
+
+                    <td>
+
+                        <select
+                            onchange="updateStatus(
+                                ${index},
+                                this.value
+                            )"
+                        >
+
+                            <option
+                                value="Pending"
+                                ${complaint.status === "Pending"
+                                    ? "selected" : ""}
+                            >
+                                Pending
+                            </option>
+
+                            <option
+                                value="Under Review"
+                                ${complaint.status === "Under Review"
+                                    ? "selected" : ""}
+                            >
+                                Under Review
+                            </option>
+
+                            <option
+                                value="In Progress"
+                                ${complaint.status === "In Progress"
+                                    ? "selected" : ""}
+                            >
+                                In Progress
+                            </option>
+
+                            <option
+                                value="Resolved"
+                                ${complaint.status === "Resolved"
+                                    ? "selected" : ""}
+                            >
+                                Resolved
+                            </option>
+
+                        </select>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            class="btn"
+                            onclick="viewComplaint(${index})"
+                        >
+
+                            View
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+}
+
+
+function updateStatus(index, status) {
+
+    const data = getData();
+
+    data.complaints[index].status = status;
+
+    saveData(data);
+
+    showToast(
+        "Complaint status updated!"
+    );
+
+}
+
+
+function viewComplaint(index) {
+
+    const data = getData();
+
+    const complaint =
+        data.complaints[index];
+
+
+    alert(
+
+        "COMPLAINT DETAILS"
+
+        + "\n\nID: "
+        + complaint.id
+
+        + "\nProblem: "
+        + complaint.problem
+
+        + "\nLocation: "
+        + complaint.location
+
+        + "\nGPS: "
+        + complaint.gps
+
+        + "\nDescription: "
+        + complaint.description
+
+        + "\nStatus: "
+        + complaint.status
+
+    );
+
+}
+
+
+loadComplaints();
+
+</script>
+
+</body>
+</html>

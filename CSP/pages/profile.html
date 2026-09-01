@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Profile | WaterWatch</title>
+
+    <link rel="stylesheet"
+          href="../css/style.css">
+
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a href="../index.html"
+       class="brand">
+
+        <span class="logo">💧</span>
+
+        <div>
+
+            <h2>WaterWatch</h2>
+
+            <small>User Profile</small>
+
+        </div>
+
+    </a>
+
+</header>
+
+
+<div class="page">
+
+    <h1>👤 My Profile</h1>
+
+    <p class="page-description">
+
+        Your WaterWatch account information.
+
+    </p>
+
+
+    <div class="card">
+
+        <h2>Community User</h2>
+
+        <br>
+
+        <p>
+            <b>Role:</b>
+            Villager
+        </p>
+
+        <br>
+
+        <p>
+            <b>Project:</b>
+            WaterWatch
+        </p>
+
+        <br>
+
+        <p>
+
+            <b>Selected Language:</b>
+
+            <span id="languageValue">
+                English
+            </span>
+
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>My Complaint Statistics</h2>
+
+        <br>
+
+        <p>
+
+            Total Complaints:
+
+            <b id="totalComplaints">0</b>
+
+        </p>
+
+        <br>
+
+        <p>
+
+            Resolved Complaints:
+
+            <b id="resolvedComplaints">0</b>
+
+        </p>
+
+        <br>
+
+        <p>
+
+            Pending Complaints:
+
+            <b id="pendingComplaints">0</b>
+
+        </p>
+
+    </div>
+
+
+    <a href="../index.html"
+       class="primary-btn">
+
+        ← Back to Home
+
+    </a>
+
+</div>
+
+
+<script src="../js/app.js"></script>
+
+<script>
+
+const data = getData();
+
+
+document.getElementById(
+    "totalComplaints"
+).innerText =
+data.complaints.length;
+
+
+document.getElementById(
+    "resolvedComplaints"
+).innerText =
+data.complaints.filter(
+    complaint => complaint.status === "Resolved"
+).length;
+
+
+document.getElementById(
+    "pendingComplaints"
+).innerText =
+data.complaints.filter(
+    complaint => complaint.status === "Pending"
+).length;
+
+
+const language =
+    localStorage.getItem("language");
+
+
+if (language) {
+
+    document.getElementById(
+        "languageValue"
+    ).innerText = language;
+
+}
+
+</script>
+
+</body>
+</html>
