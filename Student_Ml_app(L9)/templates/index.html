@@ -1,0 +1,304 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Performance Prediction</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+        }
+
+        /* Left Section */
+        .left-section {
+            width: 45%;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            padding: 50px 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left-section h1 {
+            font-size: 34px;
+            margin-bottom: 20px;
+        }
+
+        .left-section p {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .icon {
+            font-size: 55px;
+            margin-bottom: 20px;
+        }
+
+        .features {
+            margin-top: 30px;
+        }
+
+        .features p {
+            margin: 12px 0;
+        }
+
+        /* Right Section */
+        .right-section {
+            width: 55%;
+            padding: 45px;
+        }
+
+        .right-section h2 {
+            color: #222;
+            margin-bottom: 8px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .predict-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .predict-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Result */
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f0fdf4;
+            border: 2px solid #86efac;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .result-title {
+            color: #166534;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .result-mark {
+            color: #15803d;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-section,
+            .right-section {
+                width: 100%;
+            }
+
+            .left-section {
+                padding: 35px;
+            }
+
+            .right-section {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Left Side -->
+        <div class="left-section">
+
+            <div class="icon">🎓</div>
+
+            <h1>Student Performance Prediction</h1>
+
+            <p>
+                Predict a student's expected final marks using
+                study hours, attendance, and previous academic performance.
+            </p>
+
+            <div class="features">
+                <p>📚 Study Hours</p>
+                <p>📅 Attendance</p>
+                <p>📊 Previous Marks</p>
+                <p>🤖 Machine Learning Prediction</p>
+            </div>
+
+        </div>
+
+
+        <!-- Right Side -->
+        <div class="right-section">
+
+            <h2>Enter Student Details</h2>
+
+            <p class="subtitle">
+                Provide the student's academic information below.
+            </p>
+
+            <form action="/predict" method="POST">
+
+                <div class="form-group">
+
+                    <label for="study_hours">
+                        📚 Study Hours
+                    </label>
+
+                    <input
+                        type="number"
+                        id="study_hours"
+                        name="study_hours"
+                        step="0.1"
+                        min="0"
+                        placeholder="Example: 5.5"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="attendance">
+                        📅 Attendance (%)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="attendance"
+                        name="attendance"
+                        step="0.1"
+                        min="0"
+                        max="100"
+                        placeholder="Example: 85"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="previous_marks">
+                        📊 Previous Marks
+                    </label>
+
+                    <input
+                        type="number"
+                        id="previous_marks"
+                        name="previous_marks"
+                        step="0.1"
+                        min="0"
+                        max="100"
+                        placeholder="Example: 78"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit" class="predict-btn">
+                    🔮 Predict Final Marks
+                </button>
+
+            </form>
+
+
+            {% if prediction %}
+
+            <div class="result">
+
+                <div class="result-title">
+                    Predicted Final Marks
+                </div>
+
+                <div class="result-mark">
+                    {{ prediction }}
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+```
